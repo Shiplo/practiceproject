@@ -59,3 +59,29 @@ section#countdown-section {
 .date-wrap.fix:last-child {
   margin-right: 0px;
 }
+
+/* Mobile Layout: 320px. */
+@media only screen and (max-width: 767px) {
+  body {
+    overflow: hidden;
+  }
+  #countdown {
+    flex-wrap: wrap;
+    margin-bottom: 0px;
+  }
+  .countdown-title.fix {
+    margin-bottom: 30px;
+  }
+  .countdown-title.fix > h2 {
+    font-size: 35px;
+    line-height: 70px;
+  }
+  .countdown-wrapper.fix {
+    padding: 30px 20px;
+    max-width: 90%;
+  }
+  .date-wrap.fix {
+    width: 50%;
+    padding: 20px;
+  }
+}
