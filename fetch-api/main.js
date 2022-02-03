@@ -9,8 +9,14 @@ fetch(data).then(res => {
         console.log(result);
         const container = document.getElementById('fetch-data');
         const title = document.createElement('p');
+        const wrap = document.createElement('div');
+        const label = document.createElement('label');
         const text = document.createTextNode(result.question);
+        const correctAns = document.createTextNode(result.correct_answer);
         title.appendChild(text);
-        container.appendChild(title);
+        label.appendChild(correctAns);
+        wrap.appendChild(title);
+        wrap.appendChild(label);
+        container.appendChild(wrap);
     });
 });
