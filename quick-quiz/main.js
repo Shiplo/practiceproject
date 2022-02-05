@@ -25,51 +25,54 @@ const data = 'https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&t
 ];*/
 
 // Variables
-let currentQuiz = 0, quizScore = 0;
-var quizData;
+let currentQuiz = 0, quizScore = 0, answer = '';
+let questions = [], quizData = [];
 
 // Fetch Data
 fetch(data).then(res => {
     return res.json();
 }).then(choice => {
     //console.log(choice.results);
-    quizData = choice.results;
-    loadQuiz(quizData);
+    questions = choice.results;
+    fetchData();
 }).catch(error => {
     console.log(error);
 });
 
+function fetchData() {
+   quizData = [...questions];
+   loadQuiz();
+}
+
 
 // Variables
 const quizTitle = document.getElementById('quiz-title');
-const choiceLabel1 = document.getElementById('label1');
-const choiceLabel2 = document.getElementById('label2');
-const choiceLabel3 = document.getElementById('label3');
-const choiceLabel4 = document.getElementById('label4');
 const submitbtn = document.getElementById('submit');
 const radioInputs = document.getElementsByClassName('quiz-input');
-let quizNew = {};
-
 
 // View Function
-function loadQuiz(quizList) {
-    quizNew = quizList[currentQuiz];
-    //console.log(quizList);
-    if(currentQuiz < quizList.length) {
-        const randNum = Math.floor(Math.random()*4);
-        console.log(randNum);
-        console.log(quizNew.correct_answer);
-    
+function loadQuiz() {
+    //console.log(quizData);
+    const quizNew = quizData[currentQuiz];
+    if(currentQuiz < quizData.length) {
+        // Question Title
         quizTitle.innerText = quizNew.question;
-        choiceLabel1.innerText = quizNew.answer1;
-        choiceLabel2.innerText = quizNew.answer2;
-        choiceLabel3.innerText = quizNew.answer3;
-        choiceLabel4.innerText = quizNew.answer4;
+        // Question Choices
+        const randNum = Math.floor(Math.random()*4) + 1;
+        var formatedChoice = quizNew.incorrect_answers;
+        formatedChoice.splice(randNum, 0, quizNew.correct_answer);
+        answer = quizNew.correct_answer;
+        for(var i = 0; i < formatedChoice.length; i++) {
+            //console.log(formatedChoice[i]);
+            document.getElementById('label'+(i+1)).innerText = formatedChoice[i];
+            document.getElementById('answer'+(i+1)).value = formatedChoice[i];
+        }
     } else {
         alert('You have finished the Quiz. Your score is '+ quizScore);
-        //location.reload();
+        location.reload();
     }
 }
+
 
 // Next Quiz
 submitbtn.addEventListener('click', function() {
@@ -77,9 +80,9 @@ submitbtn.addEventListener('click', function() {
     for(let i = 0; i < radioInputs.length; i++) {
         if(radioInputs[i].checked) {
             selected = 1;
-            console.log(radioInputs[i].value);
-            console.log(quizNew.correct_answer);
-            if (radioInputs[i].value == quizNew.correct_answer) {
+            //console.log(radioInputs[i].value);
+            //console.log(quizNew.correct_answer);
+            if (radioInputs[i].value == answer) {
                 quizScore = quizScore+10;
             }
             radioInputs[i].checked = false;
