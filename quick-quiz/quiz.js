@@ -49,6 +49,8 @@ function fetchData() {
 const quizTitle = document.getElementById('quiz-title');
 const submitbtn = document.getElementById('submit');
 const radioInputs = document.getElementsByClassName('quiz-input');
+const currentQuestion = document.getElementById('current');
+const scoreWrap = document.getElementById('score');
 
 // View Function
 function loadQuiz() {
@@ -93,6 +95,11 @@ submitbtn.addEventListener('click', function() {
     if(selected === 1) {
         currentQuiz++;
         loadQuiz();
+        // Update Score and question number
+        scoreWrap.innerText = quizScore;
+        if(currentQuiz < 10) {
+            currentQuestion.innerText = currentQuiz+1;
+        }
     } else {
         alert('Select one answer first.')
     }
