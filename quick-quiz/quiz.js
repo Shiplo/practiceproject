@@ -76,7 +76,7 @@ function loadQuiz() {
             document.getElementById('answer'+(i+1)).value = formatedChoice[i];
         }
     } else {
-        totaltScore.innerHTML = 'You have finished the Quiz. Congrates! Your score is '+ quizScore;
+        totaltScore.innerHTML = 'You have finished the Quiz. Congrates! Your score is '+ localStorage.getItem('mostRecentScore');
         resultScore.classList.add('show');
         resultBtn.classList.add('show');
         //location.reload();
@@ -126,13 +126,22 @@ document.body.addEventListener('change', function(e) {
 // On Save
 const saveForm = document.querySelector('.result-save');
 const username = document.getElementById('username');
-saveForm.addEventListener('submit', (e) => {
+const saveBtn = document.getElementById('save');
+const highScore = localStorage.getItem("highScore") || [];
+
+// Username input field shouldn't be empty
+username.addEventListener('keyup', (e) => {
+    saveBtn.disabled = !e.target.value;
+})
+
+// Save Hight Score Local Data On click
+saveBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    console.log("Working..");
-    const highScore = localStorage.setItem('highScore', []);
-    /* highScore.push({
-        'score': quizScore,
-        'name': username.value,
-    }); */
-    console.log(highScore);
+    const scoreData = {
+        score: quizScore,
+        name: username.value,
+    }
+    highScore.push(scoreData);
+    localStorage.setItem('highScores', JSON.stringify(highScore));
+    window.location.assign('/result.html');
 });
