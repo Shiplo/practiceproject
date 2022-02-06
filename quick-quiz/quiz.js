@@ -27,6 +27,7 @@ const data = 'https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&t
 // Variables
 let currentQuiz = 0, quizScore = 0, answer = '';
 let questions = [], quizData = [];
+const loading = document.getElementById('loading');
 
 // Fetch Data
 fetch(data).then(res => {
@@ -35,6 +36,7 @@ fetch(data).then(res => {
     //console.log(choice.results);
     questions = choice.results;
     fetchData();
+    loading.classList.remove('show');
 }).catch(error => {
     console.log(error);
 });
@@ -51,6 +53,10 @@ const submitbtn = document.getElementById('submit');
 const radioInputs = document.getElementsByClassName('quiz-input');
 const currentQuestion = document.getElementById('current');
 const scoreWrap = document.getElementById('score');
+const quizError = document.getElementById('quiz-errors');
+const resultScore = document.getElementById('result-score');
+const totaltScore = document.getElementById('total-score');
+const resultBtn = document.querySelector('.result-btn');
 
 // View Function
 function loadQuiz() {
@@ -58,7 +64,7 @@ function loadQuiz() {
     const quizNew = quizData[currentQuiz];
     if(currentQuiz < quizData.length) {
         // Question Title
-        quizTitle.innerText = quizNew.question;
+        quizTitle.innerHTML = quizNew.question;
         // Question Choices
         const randNum = Math.floor(Math.random()*4) + 1;
         var formatedChoice = quizNew.incorrect_answers;
@@ -66,12 +72,14 @@ function loadQuiz() {
         answer = quizNew.correct_answer;
         for(var i = 0; i < formatedChoice.length; i++) {
             //console.log(formatedChoice[i]);
-            document.getElementById('label'+(i+1)).innerText = formatedChoice[i];
+            document.getElementById('label'+(i+1)).innerHTML = formatedChoice[i];
             document.getElementById('answer'+(i+1)).value = formatedChoice[i];
         }
     } else {
-        alert('You have finished the Quiz. Your score is '+ quizScore);
-        location.reload();
+        totaltScore.innerHTML = 'You have finished the Quiz. Congrates! Your score is '+ quizScore;
+        resultScore.classList.add('show');
+        resultBtn.classList.add('show');
+        //location.reload();
     }
 }
 
@@ -86,6 +94,7 @@ submitbtn.addEventListener('click', function() {
             //console.log(quizNew.correct_answer);
             if (radioInputs[i].value == answer) {
                 quizScore = quizScore+10;
+                localStorage.setItem('mostRecentScore', quizScore);
             }
             radioInputs[i].checked = false;
         }
@@ -101,6 +110,29 @@ submitbtn.addEventListener('click', function() {
             currentQuestion.innerText = currentQuiz+1;
         }
     } else {
-        alert('Select one answer first.')
+        //alert('Select one answer first.');
+        quizError.classList.add('show');
     }
+});
+
+// On Question Select
+const choiceQuestion = document.querySelectorAll('.quiz-input');
+document.body.addEventListener('change', function(e) {
+    if(e.target.checked === true) {
+        quizError.classList.remove('show');
+    }
+});
+
+// On Save
+const saveForm = document.querySelector('.result-save');
+const username = document.getElementById('username');
+saveForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    console.log("Working..");
+    const highScore = localStorage.setItem('highScore', []);
+    /* highScore.push({
+        'score': quizScore,
+        'name': username.value,
+    }); */
+    console.log(highScore);
 });

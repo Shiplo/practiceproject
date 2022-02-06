@@ -18,28 +18,43 @@
                     <p>Score: <span id="score">0</span></p>
                 </div>
             </div>
+            <div id="quiz-list-wrapper">
+                <h2 id="quiz-title">Quiz Title</h2>
+                <div class="all-quiz">
+                    <div class="sinle-quiz">
+                        <input type="radio" name="quiz" id="answer1" value="answer1" class="quiz-input">
+                        <label for="answer1" id="label1">Answer 1</label>
+                    </div>
+                    <div class="sinle-quiz">
+                        <input type="radio" name="quiz" id="answer2" value="answer2" class="quiz-input">
+                        <label for="answer2" id="label2">Answer 2</label>
+                    </div>
+                    <div class="sinle-quiz">
+                        <input type="radio" name="quiz" id="answer3" value="answer3" class="quiz-input">
+                        <label for="answer3" id="label3">Answer 3</label>
+                    </div>
+                    <div class="sinle-quiz">
+                        <input type="radio" name="quiz" id="answer4" value="answer4" class="quiz-input">
+                        <label for="answer4" id="label4">Answer 4</label>
+                    </div>
+                </div>
+                <div id="quiz-errors"><p>Select one answer first.</p></div>
 
-            <h2 id="quiz-title">Quiz Title</h2>
-            <div class="all-quiz">
-                <div class="sinle-quiz">
-                    <input type="radio" name="quiz" id="answer1" value="answer1" class="quiz-input">
-                    <label for="answer1" id="label1">Answer 1</label>
+                <div id="loading" class="show">
+                    <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
                 </div>
-                <div class="sinle-quiz">
-                    <input type="radio" name="quiz" id="answer2" value="answer2" class="quiz-input">
-                    <label for="answer2" id="label2">Answer 2</label>
-                </div>
-                <div class="sinle-quiz">
-                    <input type="radio" name="quiz" id="answer3" value="answer3" class="quiz-input">
-                    <label for="answer3" id="label3">Answer 3</label>
-                </div>
-                <div class="sinle-quiz">
-                    <input type="radio" name="quiz" id="answer4" value="answer4" class="quiz-input">
-                    <label for="answer4" id="label4">Answer 4</label>
+
+                <div id="result-score">
+                    <h3 id="total-score">You have finished the Quiz. Congrates! Your score is 20.</h3>
+                    <form class="result-save">
+                        <input type="text" name="username" placeholder="Your Name" id="username">
+                        <button type="submit" id="save">Save Score</button>
+                    </form>
                 </div>
             </div>
             <div class="quiz-action">
                 <button type="submit" id="submit" class="quiz-submit">Submit</button>
+                <a href="result.html" class="result-btn">High Score</a>
             </div>
         </div>
     </section>
