@@ -127,12 +127,21 @@ document.body.addEventListener('change', function(e) {
 const saveForm = document.querySelector('.result-save');
 const username = document.getElementById('username');
 const saveBtn = document.getElementById('save');
-const highScore = localStorage.getItem("highScore") || [];
+var highScore = [];
+highScore = JSON.parse(localStorage.getItem("highScores")) || [];
+//console.log(highScore);
 
 // Username input field shouldn't be empty
 username.addEventListener('keyup', (e) => {
     saveBtn.disabled = !e.target.value;
 })
+
+// Remove Link 
+function RemoveLastDirectoryPartOf(the_url){
+    var the_arr = the_url.split('/');
+    the_arr.pop();
+    return( the_arr.join('/') );
+}
 
 // Save Hight Score Local Data On click
 saveBtn.addEventListener('click', (e) => {
@@ -142,6 +151,13 @@ saveBtn.addEventListener('click', (e) => {
         name: username.value,
     }
     highScore.push(scoreData);
+
+    highScore.sort((a, b) => b.score - a.score);
+
+    highScore.splice(10);
+
     localStorage.setItem('highScores', JSON.stringify(highScore));
-    window.location.assign('/result.html');
+
+    var redirectPage = RemoveLastDirectoryPartOf(window.location.href);
+    window.location.href = redirectPage+'/result.html';
 });
