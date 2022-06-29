@@ -1,0 +1,18 @@
+h1 {
+    display: inline-block;
+    font-size: 35px;
+    line-height: 40px;
+    margin-right: 10px;
+}
+#btn {
+    background-color: peru;
+    padding: 10px 15px;
+    border: 0px solid #ddd;
+    font-size: 18px;
+    line-height: 25px;
+    color: #ffffff;
+    display: inline-block;
+}
+button#btn.hide {
+    display: none;
+}
